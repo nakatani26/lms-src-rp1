@@ -118,6 +118,13 @@
 			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--2025/09/12追加↓-->
+		<!-- mybatis を使用するための設定 -->
+		<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>3.0.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>

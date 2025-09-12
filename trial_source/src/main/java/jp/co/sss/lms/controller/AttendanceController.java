@@ -1,6 +1,8 @@
 package jp.co.sss.lms.controller;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,15 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
+		// 未入力チェック
+        Calendar cl = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String date = sdf.format(cl.getTime());
+        			
+		boolean chkFlg = studentAttendanceService.getAttendanceNoInput(loginUserDto.getLmsUserId(),
+				(short)0, date.toString());
+		model.addAttribute("chkFlg", chkFlg);
+		
 		return "attendance/detail";
 	}
 
@@ -143,5 +154,8 @@ public class AttendanceController {
 
 		return "attendance/detail";
 	}
-
+	
+	
+	
 }
+

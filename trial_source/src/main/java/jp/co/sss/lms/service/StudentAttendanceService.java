@@ -333,5 +333,27 @@ public class StudentAttendanceService {
 		// 完了メッセージ
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
+	
+	/**
+	 * 勤怠情報（受講生入力）未入力件数取得
+	 * @param lmsUserId
+	 * @param deleteFlg
+	 * @param date
+	 * @return
+	 */
+	public boolean getAttendanceNoInput(Integer lmsUserId,
+			short deleteFlg, String date) {
+
+		// 勤怠情報（受講生入力）未入力件数取得
+		int cnt = tStudentAttendanceMapper.getAttendanceNoInput(lmsUserId, date, deleteFlg);
+		
+		// 件数が1県以上の場合
+		if (cnt > 0) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 
 }
