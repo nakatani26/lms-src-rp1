@@ -31,6 +31,7 @@ public class AttendanceController {
 	private StudentAttendanceService studentAttendanceService;
 	@Autowired
 	private LoginUserDto loginUserDto;
+	
 
 	/**
 	 * 勤怠管理画面 初期表示
@@ -123,9 +124,14 @@ public class AttendanceController {
 		// 勤怠管理リストの取得
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
+		
+//		LinkedHashMap<Integer, String> hour = AttendanceUtil.getTrainingStartTimeHour();
+//		LinkedHashMap<Integer, String> min = AttendanceUtil.getTrainingStartTimeMinutes();
+		
 		// 勤怠フォームの生成
 		AttendanceForm attendanceForm = studentAttendanceService
 				.setAttendanceForm(attendanceManagementDtoList);
+
 		model.addAttribute("attendanceForm", attendanceForm);
 
 		return "attendance/update";
@@ -143,7 +149,8 @@ public class AttendanceController {
 	@RequestMapping(path = "/update", params = "complete", method = RequestMethod.POST)
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
-
+		
+		
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);
 		model.addAttribute("message", message);
@@ -155,7 +162,7 @@ public class AttendanceController {
 		return "attendance/detail";
 	}
 	
-	
+	/** 勤怠直接編集時分プルダウン */
 	
 }
 

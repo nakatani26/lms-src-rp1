@@ -146,5 +146,59 @@ public class AttendanceUtil {
 		}
 		return false;
 	}
+	
+	/**
+	 * プルダウン(時)用Map
+	 */
+	public  LinkedHashMap<Integer ,String> setTrainingStartTimeHour(){
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+		map. put(null, "");
+		for (int i = 0; i < 24; i++) {
+			String hour = String.format("%02d", i);
+			map.put(i,hour);
+		}
+		return map;
+	}
+	
+	/**
+	 * プルダウン(分)用Map
+	 */
+	public  LinkedHashMap<Integer, String> setTrainingStartTimeMinute() {
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+		map. put(null, "");
+		for (int i = 0; i <60; i++) {
+			String minute = String.format("%02d", i);
+			map.put(i,minute);
+		}
+		return map;
+	}
 
 }
+
+
+
+/** mapじゃないやつ↓
+
+	public  LinkedHashMap<Integer ,String> getTrainingStartTimeHour(){
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+		for (int i = 0; i < 24; i++) {
+			String hour = String.format("%02d", i);
+			timeHours.put(i,hour);
+		}
+		return timeHours;
+	}
+	
+	/**
+	 * プルダウン(分)用Map
+	 
+	public  LinkedHashMap<Integer, String> getTrainingStartTimeMinutes() {
+		LinkedHashMap<Integer, String> timeMinutes = new LinkedHashMap<>();
+		for (int i = 0; i <60; i++) {
+			String minute = String.format("%02d", i);
+			timeMinutes.put(i,minute);
+		}
+		return timeMinutes;
+	}
+
+}
+*/

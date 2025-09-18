@@ -219,6 +219,9 @@ public class StudentAttendanceService {
 		attendanceForm.setUserName(loginUserDto.getUserName());
 		attendanceForm.setLeaveFlg(loginUserDto.getLeaveFlg());
 		attendanceForm.setBlankTimes(attendanceUtil.setBlankTime());
+		attendanceForm.setTimeHours(attendanceUtil.setTrainingStartTimeHour());
+		attendanceForm.setTimeMinutes(attendanceUtil.setTrainingStartTimeMinute());
+
 
 		// 途中退校している場合のみ設定
 		if (loginUserDto.getLeaveDate() != null) {
@@ -347,7 +350,7 @@ public class StudentAttendanceService {
 		// 勤怠情報（受講生入力）未入力件数取得
 		int cnt = tStudentAttendanceMapper.getAttendanceNoInput(lmsUserId, date, deleteFlg);
 		
-		// 件数が1県以上の場合
+		// 件数が1件以上の場合
 		if (cnt > 0) {
 			return true;
 		} else {
