@@ -13,7 +13,7 @@ import jp.co.sss.lms.mapper.MSectionMapper;
 /**
  * 勤怠管理のユーティリティクラス
  * 
- * @author 東京ITスクール
+ * @author 中谷文乃
  */
 @Component
 public class AttendanceUtil {
@@ -146,9 +146,9 @@ public class AttendanceUtil {
 		}
 		return false;
 	}
-	
+	//↓プルダウン(時)用Map
 	/**
-	 * プルダウン(時)用Map
+	 * @author 中谷文乃_Task26
 	 */
 	public  LinkedHashMap<Integer ,String> setTrainingStartTimeHour(){
 		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
@@ -160,8 +160,9 @@ public class AttendanceUtil {
 		return map;
 	}
 	
+	//↓プルダウン(分)用Map
 	/**
-	 * プルダウン(分)用Map
+	 * @author 中谷文乃_Task26
 	 */
 	public  LinkedHashMap<Integer, String> setTrainingStartTimeMinute() {
 		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
@@ -176,29 +177,3 @@ public class AttendanceUtil {
 }
 
 
-
-/** mapじゃないやつ↓
-
-	public  LinkedHashMap<Integer ,String> getTrainingStartTimeHour(){
-		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
-		for (int i = 0; i < 24; i++) {
-			String hour = String.format("%02d", i);
-			timeHours.put(i,hour);
-		}
-		return timeHours;
-	}
-	
-	/**
-	 * プルダウン(分)用Map
-	 
-	public  LinkedHashMap<Integer, String> getTrainingStartTimeMinutes() {
-		LinkedHashMap<Integer, String> timeMinutes = new LinkedHashMap<>();
-		for (int i = 0; i <60; i++) {
-			String minute = String.format("%02d", i);
-			timeMinutes.put(i,minute);
-		}
-		return timeMinutes;
-	}
-
-}
-*/

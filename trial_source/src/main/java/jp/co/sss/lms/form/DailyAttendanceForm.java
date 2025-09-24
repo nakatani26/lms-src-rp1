@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 日次の勤怠フォーム
  * 
- * @author 東京ITスクール
+ * @author 中谷文乃_Task26
  */
 @Data
 public class DailyAttendanceForm {
@@ -40,6 +40,7 @@ public class DailyAttendanceForm {
 	private Integer trainingEndTimeMinute;
 	/** 退勤時間 (分 画面表示用) */
 	private Integer trainingEndTimeMinuteValues;
+	
 	/** ステータス */
 	private String status;
 	/** 備考 */

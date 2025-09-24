@@ -339,15 +339,20 @@ public class StudentAttendanceService {
 	
 	/**
 	 * 勤怠情報（受講生入力）未入力件数取得
+	 * 引数に基づいて、未入力かをtrue,falseで返す
 	 * @param lmsUserId
 	 * @param deleteFlg
 	 * @param date
 	 * @return
+	 * @author 中谷文乃_Task25
 	 */
 	public boolean getAttendanceNoInput(Integer lmsUserId,
 			short deleteFlg, String date) {
 
-		// 勤怠情報（受講生入力）未入力件数取得
+		/**勤怠情報（受講生入力）未入力件数取得 
+		 * tStudentAttendanceMapper.getAttendanceNoInputを呼んで、未入力の勤怠をDBから取得
+		 * cntに結果を格納
+		 */
 		int cnt = tStudentAttendanceMapper.getAttendanceNoInput(lmsUserId, date, deleteFlg);
 		
 		// 件数が1件以上の場合

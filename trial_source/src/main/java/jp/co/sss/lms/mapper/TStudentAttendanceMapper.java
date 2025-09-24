@@ -52,6 +52,7 @@ public interface TStudentAttendanceMapper {
 	/**
 	 * 勤怠情報（受講生入力）未入力件数取得
 	 * 
+	 * @author 中谷文乃
 	 * @param lmsUserId
 	 * @param delFlg
 	 * @param date

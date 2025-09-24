@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
 import jp.co.sss.lms.form.AttendanceForm;
+import jp.co.sss.lms.form.DailyAttendanceForm;
 import jp.co.sss.lms.service.StudentAttendanceService;
 import jp.co.sss.lms.util.Constants;
 
@@ -50,7 +51,7 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
-		// 未入力チェック
+		// 未入力チェック 中谷文乃_Task25
         Calendar cl = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date = sdf.format(cl.getTime());
@@ -125,8 +126,6 @@ public class AttendanceController {
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		
-//		LinkedHashMap<Integer, String> hour = AttendanceUtil.getTrainingStartTimeHour();
-//		LinkedHashMap<Integer, String> min = AttendanceUtil.getTrainingStartTimeMinutes();
 		
 		// 勤怠フォームの生成
 		AttendanceForm attendanceForm = studentAttendanceService
@@ -150,6 +149,29 @@ public class AttendanceController {
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
 		
+		/** 中谷文乃_Task26
+		 *  trainingStartTimeとtrainingEndTimeをセット 
+		 *  DailyAttendanceFormの時・分を"HH:mm"形式に変換してセット
+	     */
+	    for (DailyAttendanceForm daily : attendanceForm.getAttendanceList()) {
+	        Integer startHour = daily.getTrainingStartTimeHour();
+	        Integer startMinute = daily.getTrainingStartTimeMinute();
+	        if (startHour != null && startMinute != null) {
+	            daily.setTrainingStartTime(String.format("%02d:%02d", startHour, startMinute));
+	        } else {
+	            daily.setTrainingStartTime("");
+	        }
+
+	        Integer endHour = daily.getTrainingEndTimeHour();
+	        Integer endMinute = daily.getTrainingEndTimeMinute();
+	        if (endHour != null && endMinute != null) {
+	            daily.setTrainingEndTime(String.format("%02d:%02d", endHour, endMinute));
+	        } else {
+	            daily.setTrainingEndTime("");
+	        }
+	    }
+	    // --- セット終了 ---
+		
 		
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);
@@ -161,8 +183,6 @@ public class AttendanceController {
 
 		return "attendance/detail";
 	}
-	
-	/** 勤怠直接編集時分プルダウン */
 	
 }
 

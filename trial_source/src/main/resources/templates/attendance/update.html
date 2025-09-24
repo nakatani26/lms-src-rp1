@@ -58,6 +58,8 @@
 								</th:block>
 								<td class="w140">[[${dailyAttendanceForm.dispTrainingDate}]]</td>
 								<td class="w300">[[${dailyAttendanceForm.sectionName}]]</td>
+								
+								<!--　出勤時間プルダウン　中谷文乃_Task26 -->
 								<td class="w100">
 									<div style="display: flex; align-items: center; gap: 8px;">
 									<select th:name="|attendanceList[${stat.index}].trainingStartTimeHour|" class="form-control" style="width: 70px;">
@@ -78,6 +80,7 @@
 								</div>
 								</td>
 						
+								<!--　退勤時間プルダウン　中谷文乃_Task26 -->
 								<td class="w100">
 									<div style="display: flex; align-items: center; gap: 8px;">
 									<select th:name="|attendanceList[${stat.index}].trainingEndTimeHour|" class="form-control" style="width:70px;">
@@ -97,6 +100,7 @@
 									</select>
 									</div>
 									</td>
+									
 								<td class="w80">
 									<select th:name="|attendanceList[${stat.index}].blankTime|" class="form-control">
 										<option th:each="blankTime : ${attendanceForm.blankTimes}" th:value="${blankTime.key}" th:inline="text" class="form-control" 
@@ -122,16 +126,18 @@
 					<input type="submit" value="更新" name="complete" class="btn btn-info" />
 				</div>
 
-			</form>
+			</for>
 		</div>
 	</div>
-<script>
+
+<!-- 更新確認ダイアログ 中谷文乃_Task27-->
+	<script>
       function registCheck() {
         if (confirm("更新します。よろしいですか？")) {
-          return true;
+          return true;	
         }
         else {
-          return false;
+          return false;	
         }
       }
     </script>
