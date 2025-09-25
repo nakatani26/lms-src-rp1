@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import jakarta.validation.Valid;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import jp.co.sss.lms.dto.AttendanceManagementDto;
 import jp.co.sss.lms.dto.LoginUserDto;
 import jp.co.sss.lms.form.AttendanceForm;
@@ -57,7 +60,7 @@ public class AttendanceController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date = sdf.format(cl.getTime());
         			
-		boolean chkFlg = studentAttendanceService.getAttendanceNoInput(loginUserDto.getLmsUserId(),
+		boolean chkFlg = studentAttendanceService.notEnterCount(loginUserDto.getLmsUserId(),
 				(short)0, date.toString());
 		model.addAttribute("chkFlg", chkFlg);
 		
@@ -117,6 +120,7 @@ public class AttendanceController {
 	/**
 	 * 勤怠管理画面 『勤怠情報を直接編集する』リンク押下
 	 * 
+	 * @author 中谷文乃_Task26
 	 * @param model
 	 * @return 勤怠情報直接変更画面
 	 */
@@ -140,6 +144,7 @@ public class AttendanceController {
 	/**
 	 * 勤怠情報直接変更画面 『更新』ボタン押下
 	 * 
+	 * @author 中谷文乃_Task26
 	 * @param attendanceForm
 	 * @param model
 	 * @param result
@@ -147,20 +152,31 @@ public class AttendanceController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(path = "/update", params = "complete", method = RequestMethod.POST)
-	public String complete(@Valid AttendanceForm attendanceForm, Model model, BindingResult result)
+	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
 		
-		if(result.hasErrors()) {
-			model.addAttribute(attendanceForm);
-			return "attendance/update";
-		}
+	    // 手動でバリデーションを実行する
+	    Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+	    Set<ConstraintViolation<AttendanceForm>> violations = validator.validate(attendanceForm);
+
+	    // バリデーションエラーがあればBindingResultに追加
+	    for (ConstraintViolation<AttendanceForm> violation : violations) {
+	        result.rejectValue(violation.getPropertyPath().toString(), violation.getMessage());
+	    }
+
+	    // バリデーションエラーがある場合、エラーをビューに表示
+	    if (result.hasErrors()) {
+	        model.addAttribute("attendanceForm", attendanceForm);
+	        return "attendance/update";
+	    }
 		
-		/** 中谷文乃_Task26
+		/** Task26
 		 *  trainingStartTimeとtrainingEndTimeをセット 
 		 *  DailyAttendanceFormの時・分を"HH:mm"形式に変換してセット
 	     */
 	    for (DailyAttendanceForm daily : attendanceForm.getAttendanceList()) {
-	        Integer startHour = daily.getTrainingStartTimeHour();
+	        
+	    	Integer startHour = daily.getTrainingStartTimeHour();
 	        Integer startMinute = daily.getTrainingStartTimeMinute();
 	        if (startHour != null && startMinute != null) {
 	            daily.setTrainingStartTime(String.format("%02d:%02d", startHour, startMinute));

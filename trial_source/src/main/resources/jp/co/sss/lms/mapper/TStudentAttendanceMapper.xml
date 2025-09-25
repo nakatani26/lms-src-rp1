@@ -87,13 +87,13 @@
 	</update>
 	
 	<!-- ↓中谷文乃_Task25 -->
-	<select id="getAttendanceNoInput" resultType="int">
+	<select id="notEnterCount" resultType="Integer">
 		<![CDATA[
 		SELECT
 			COUNT(*) AS CNT
 		FROM t_student_attendance t1
 		WHERE lms_user_id = #{lmsUserId} 
-			AND training_date < CAST(#{date} AS timestamp)
+			AND training_date < CAST(#{trainingDate} AS timestamp)
 			AND (training_start_time = '' OR training_end_time = '')
 			AND delete_flg = #{deleteFlg}
 		]]>

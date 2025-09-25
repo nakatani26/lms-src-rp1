@@ -246,6 +246,8 @@ public class StudentAttendanceService {
 				dailyAttendanceForm.setBlankTimeValue(String.valueOf(
 						attendanceUtil.calcBlankTime(attendanceManagementDto.getBlankTime())));
 			}
+			
+			
 			dailyAttendanceForm.setStatus(String.valueOf(attendanceManagementDto.getStatus()));
 			dailyAttendanceForm.setNote(attendanceManagementDto.getNote());
 			dailyAttendanceForm.setSectionName(attendanceManagementDto.getSectionName());
@@ -279,6 +281,23 @@ public class StudentAttendanceService {
 		// 入力された情報を更新用のエンティティに移し替え
 		Date date = new Date();
 		for (DailyAttendanceForm dailyAttendanceForm : attendanceForm.getAttendanceList()) {
+			
+			
+			Integer startHour = dailyAttendanceForm.getTrainingStartTimeHour();
+		    Integer startMinute = dailyAttendanceForm.getTrainingStartTimeMinute();
+		    if (startHour != null && startMinute != null) {
+		        dailyAttendanceForm.setTrainingStartTime(String.format("%02d:%02d", startHour, startMinute));
+		    } else {
+		        dailyAttendanceForm.setTrainingStartTime("");
+		    }
+
+		    Integer endHour = dailyAttendanceForm.getTrainingEndTimeHour();
+		    Integer endMinute = dailyAttendanceForm.getTrainingEndTimeMinute();
+		    if (endHour != null && endMinute != null) {
+		        dailyAttendanceForm.setTrainingEndTime(String.format("%02d:%02d", endHour, endMinute));
+		    } else {
+		        dailyAttendanceForm.setTrainingEndTime("");
+		    }
 
 			// 更新用エンティティ作成
 			TStudentAttendance tStudentAttendance = new TStudentAttendance();
@@ -346,17 +365,17 @@ public class StudentAttendanceService {
 	 * @return
 	 * @author 中谷文乃_Task25
 	 */
-	public boolean getAttendanceNoInput(Integer lmsUserId,
-			short deleteFlg, String date) {
+	public boolean notEnterCount(Integer lmsUserId,
+			short deleteFlg, String trainingDate) {
 
 		/**勤怠情報（受講生入力）未入力件数取得 
 		 * tStudentAttendanceMapper.getAttendanceNoInputを呼んで、未入力の勤怠をDBから取得
 		 * cntに結果を格納
 		 */
-		int cnt = tStudentAttendanceMapper.getAttendanceNoInput(lmsUserId, date, deleteFlg);
+		Integer COUNT = tStudentAttendanceMapper.notEnterCount(lmsUserId, trainingDate, deleteFlg);
 		
 		// 件数が1件以上の場合
-		if (cnt > 0) {
+		if (COUNT > 0) {
 			return true;
 		} else {
 			return false;
