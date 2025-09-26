@@ -28,23 +28,23 @@ public class DailyAttendanceForm {
 	/** 出勤時間 (時 プルダウン) */
 	private Integer trainingStartTimeHour;
 	/** 出勤時間 (時 画面表示用) */
-	private Integer trainingStartTimeHourValue;
+	private String trainingStartTimeHourValue;
 	/** 出勤時間 (分 プルダウン) */
 	private Integer trainingStartTimeMinute;
 	/** 出勤時間 (分 画面表示用) */
-	private Integer trainingStartTimeMinuteValue;
+	private String trainingStartTimeMinuteValue;
 	/** 退勤時間 (時 プルダウン) */
 	private Integer trainingEndTimeHour;
 	/** 退勤時間 (時 画面表示用) */
-	private Integer trainingEndTimeHourValue;
+	private String trainingEndTimeHourValue;
 	/** 退勤時間 (分 プルダウン) */
 	private Integer trainingEndTimeMinute;
 	/** 退勤時間 (分 画面表示用) */
-	private Integer trainingEndTimeMinuteValues;
+	private String trainingEndTimeMinuteValue;
 	
 	/** ステータス */
 	private String status;
-	/** 入力チェック Task27*/
+	/** 入力チェック Task27 */
 	/** 備考 */
 	@Size(max=100,message="maxlength")
 	private String note;
