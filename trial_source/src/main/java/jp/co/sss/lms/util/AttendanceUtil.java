@@ -176,34 +176,6 @@ public class AttendanceUtil {
 		return map;
 	}
 	
-	/**
-	 * 
-	 * @author 中谷文乃_Task26
-	 * プルダウン(時)用Map
-	 */
-	public  LinkedHashMap<Integer ,String> setTrainingEndTimeHour(){
-		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
-		map.put(null, "");
-		for (int i = 0; i < 24; i++) {
-			String hour = String.format("%02d", i);
-			map.put(i,hour);
-		}
-		return map;
-	}
-
-	/**
-	 * @author 中谷文乃_Task26
-	 * プルダウン(分)用Map
-	 */
-	public  LinkedHashMap<Integer, String> setTrainingEndTimeMinute() {
-		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
-		map.put(null, "");
-		for (int i = 0; i <60; i++) {
-			String minute = String.format("%02d", i);
-			map.put(i,minute);
-		}
-		return map;
-	}
 }
 
 

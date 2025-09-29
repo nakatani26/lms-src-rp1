@@ -2,6 +2,7 @@ package jp.co.sss.lms.dto;
 
 import java.util.Date;
 
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -24,11 +25,13 @@ public class StudentAttendanceDto {
 	private String trainingEndTime;
 	/** 勤怠状況 */
 	private Short status;
-	/** 備考 */
+	/** 備考 Task27 maxlengthエラーメッセージ* */
+	@Size(max=100, message="{maxlength}")
 	private String note;
 	/** 中抜け時間 */
 	private Integer blankTime;
 	/** 勤怠状態画面表示名 */
 	private String statusDispName;
 
+	
 }

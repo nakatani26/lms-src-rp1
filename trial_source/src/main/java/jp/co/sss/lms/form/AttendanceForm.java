@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -39,6 +40,11 @@ public class AttendanceForm {
 	private LinkedHashMap<Integer, String> timeHours;
 	/** 出勤・退勤時間(分プルダウン) */
 	private LinkedHashMap<Integer, String> timeMinutes;
+	
+	/** 入力チェック Task27 */
+	/** 備考 */
+	@Size(max=100,message="maxlength")
+	private String note;
 
 	
 }
